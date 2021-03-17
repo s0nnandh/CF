@@ -23,29 +23,39 @@ template<class H, class... T> void DBG(H h, T... t) {
 #define dbg(...) cerr << "[ ]" << endl
 #endif
 
+int n;
+void create(vector<int> &dpt,vector<int> &r,int i ,int j,int p){
+    if(i > j)return;
+    //dbg(i,j);
+    int m = 0,idx = -1;
+    rep(k,i,j+1){
+        if(m < r[k]){
+            m = r[k];
+            idx = k;
+        }
+    }
+    //dbg(m,p);
+    dpt[m]=dpt[p]+1;
+    create(dpt,r,i,idx-1,m);
+    create(dpt,r,idx+1,j,m);
+}   
 
 void solve(){
     
-    int n;
     cin >> n;
-    vector<int> x,y;
-    rep(i,0,2*n){
-        int a,b;
-        cin >> a >> b;
-        if(a == 0){
-            y.push_back(b);
-        }
-        else x.push_back(a);
+    vector<vector<int>> adj(n+1);
+    vector<int> pos(n+1),r(n+1);
+    rep(i,1,n+1){
+        //int k;
+        cin >> r[i];
+        pos[i] = r[i];
+        //r[k] = n-k;
+        //dbg(r[i]);
     }
-    sort(x.begin(),x.end());
-    sort(y.begin(),y.end());
-    cout << setprecision(15) << fixed;
-    double ans = 0;
-    rep(i,0,n){
-        dbg((1.0*x[i]*x[i])+(y[i]*y[i]));
-        ans+=sqrt((1.0*x[i]*x[i])+(1.0*y[i]*y[i]));
-    }
-    cout << ans;ln;
+    vector<int> dpt(n+1);
+    create(dpt,r,1,n,0);
+    rep(i,1,n+1)cout << --dpt[pos[i]] << " ";
+    ln;
 }
 
 int main(){

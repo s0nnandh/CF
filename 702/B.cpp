@@ -26,26 +26,35 @@ template<class H, class... T> void DBG(H h, T... t) {
 
 void solve(){
     
-    int n;
-    cin >> n;
-    vector<int> x,y;
-    rep(i,0,2*n){
-        int a,b;
-        cin >> a >> b;
-        if(a == 0){
-            y.push_back(b);
-        }
-        else x.push_back(a);
-    }
-    sort(x.begin(),x.end());
-    sort(y.begin(),y.end());
-    cout << setprecision(15) << fixed;
-    double ans = 0;
+    int n,k;
+    cin >> n >> k;
+    set<ll> s,pos;
+    vector<bool> v(n);
+    ll mex = 0,m = 0;
     rep(i,0,n){
-        dbg((1.0*x[i]*x[i])+(y[i]*y[i]));
-        ans+=sqrt((1.0*x[i]*x[i])+(1.0*y[i]*y[i]));
+        ll a;
+        cin >> a;
+        m = max(m,a);
+        s.insert(a);
+        if(a < n){
+            v[a] = 1;
+        }
+    }  
+    bool ss = 0;  
+    rep(i,0,n){
+        if(!v[i]){
+            ss = 1;
+            mex = i;
+            break;
+        }
+    }       
+    if(ss == 0){
+        cout << n + k;ln;
+        return;
     }
-    cout << ans;ln;
+    else{
+        cout << n + ((bool)k && s.find((m+mex+1)/2) == s.end());ln;
+    }
 }
 
 int main(){
