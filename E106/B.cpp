@@ -25,21 +25,35 @@ template<class H, class... T> void DBG(H h, T... t) {
 
 
 void solve(){
-   
-    int n,k;
-    cin >> n >> k;
-    rep(i,0,k-3)cout << 1 << " ";
-    n=n+3-k;
-    if(n&1){
-        cout << n/2 << " " << n/2 << " " << 1;
-        ln;
+        
+    string s;
+    cin >> s;
+    int n = s.size();
+    rep(i,0,n+1){
+        bool pos = 1;
+        rep(j,0,i){
+            if(j+1 < n){
+                if(s.substr(j,2) == "11"){
+                    pos = 0;
+                    break;
+                }
+            }
+        }
+        if(!pos)continue;
+        rep(j,i,n){
+            if(j+1 < n){
+                if(s.substr(j,2) == "00"){
+                    pos = 0;
+                    break;
+                }
+            }
+        }
+        if(pos){
+            cout << "YES";ln;
+            return;
+        }
     }
-    else if(n%4 == 0){
-        cout << n/2 << " " << n/4 << ' ' << n/4;ln;
-    }
-    else{
-        cout << n/2 -1  << " " << n/2 -1 << " " << 2;ln;
-    }
+    cout << "NO";ln;
 }
 
 int main(){

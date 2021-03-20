@@ -25,21 +25,28 @@ template<class H, class... T> void DBG(H h, T... t) {
 
 
 void solve(){
-   
-    int n,k;
-    cin >> n >> k;
-    rep(i,0,k-3)cout << 1 << " ";
-    n=n+3-k;
-    if(n&1){
-        cout << n/2 << " " << n/2 << " " << 1;
+        
+    int n,k1,k2;
+    cin >> n >> k1 >> k2;
+    int w,b;
+    cin >> w >> b;
+    int ww = min(k1,k2),bb = min(n-k1,n-k2);
+    string ans = "NO";
+    int k = abs(k1-k2);    
+    if(w <= ww && b <= bb){
+        cout << "YES";
         ln;
+        return;
     }
-    else if(n%4 == 0){
-        cout << n/2 << " " << n/4 << ' ' << n/4;ln;
+    w-=ww;b-=bb;
+    if(k >= 2*w && k >= 2*b){
+        cout << "YES";
+        ln;
+        return;
     }
-    else{
-        cout << n/2 -1  << " " << n/2 -1 << " " << 2;ln;
-    }
+    cout << "NO";ln;
+    return;
+
 }
 
 int main(){

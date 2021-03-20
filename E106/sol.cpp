@@ -25,21 +25,37 @@ template<class H, class... T> void DBG(H h, T... t) {
 
 
 void solve(){
-   
-    int n,k;
-    cin >> n >> k;
-    rep(i,0,k-3)cout << 1 << " ";
-    n=n+3-k;
-    if(n&1){
-        cout << n/2 << " " << n/2 << " " << 1;
-        ln;
+        
+    ll n;
+    cin >> n;
+    vector<ll> c(n);
+    rep(i,0,n)cin >> c[i];
+    set<ll> s;
+    s.insert(c[0]);s.insert(c[1]);
+    ll ans = n*c[0] + n*c[1];
+    
+    dbg(ans,c[0],c[1]);
+    rep(j,2,n){
+        int i = j-1;
+        s.insert(c[j]);
+        ll sum = 0,cnt = 0;
+        for(auto x : s){
+            if(cnt == 0){
+                sum+=(n-(i/2))*x;
+                dbg(n-(i/2));
+            }
+            else if(cnt == 1){
+                sum+=(n - ((i+1)/2))*x;
+                dbg((n - ((i+1)/2)));
+            }
+            else sum+=x;
+            ++cnt;
+        }
+        ans = min(ans,sum); 
+        dbg(j,sum);       
     }
-    else if(n%4 == 0){
-        cout << n/2 << " " << n/4 << ' ' << n/4;ln;
-    }
-    else{
-        cout << n/2 -1  << " " << n/2 -1 << " " << 2;ln;
-    }
+    cout << ans;ln;
+
 }
 
 int main(){

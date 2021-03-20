@@ -25,11 +25,9 @@ template<class H, class... T> void DBG(H h, T... t) {
 
 
 void solve(){
-   
+    
     int n,k;
     cin >> n >> k;
-    rep(i,0,k-3)cout << 1 << " ";
-    n=n+3-k;
     if(n&1){
         cout << n/2 << " " << n/2 << " " << 1;
         ln;
