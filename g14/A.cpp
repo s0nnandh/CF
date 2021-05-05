@@ -20,43 +20,46 @@ template<class H, class... T> void DBG(H h, T... t) {
 #ifdef _DEBUG
 #define dbg(...) cerr << "LINE(" << __LINE__ << ") -> [" << #__VA_ARGS__ << "]: [", DBG(__VA_ARGS__)
 #else
-#define dbg(...) cerr << "" << endl
+#define dbg(...) cerr << "[ ]" << endl
 #endif
 
 #define pi pair<int,int>
-#define fr first
-#define sc second
 
 
 void solve(){
-    int n,m,x;
-    cin >> n >> m >> x;
-    vector<pi> v(n);
+    int n,k;
+    cin >> n >> k;
+    vector<int> v(n);
+    int s = 0;
     rep(i,0,n){
-        cin >> v[i].fr;
-        v[i].sc = i;
+        cin >> v[i];
+        s+=v[i];
     }
-    sort(v.begin(),v.end());
-    vector<int> ans(n);
-    set<pi> s;
-    rep(i,0,m){
-        s.insert(v[i]);
-        ans[v[i].sc] = i;
+    if(s == k){
+        cout << "NO";
+        ln;
+    }   
+    else{
+        cout << "YES";
+        ln;
+        int ss = 0;
+        vector<int> ans(n); 
+        rep(i,0,n){
+            ans[i] = v[i];
+            ss+=v[i];
+            if(ss == k){
+                ans[i] = v[i+1];
+                //++i;
+                ans[i+1] = v[i];
+                s+=v[i+1];
+                ++i;
+            }
+        }   
+        rep(i,0,n){
+            cout << ans[i] << " ";
+        }
+        ln;
     }
-    rep(i,m,n){
-        auto cur = *s.begin();
-        s.erase(s.begin());
-        cur.fr += v[i].fr;
-        ans[v[i].sc] = ans[cur.sc];
-        s.insert(cur);
-    }
-
-    cout << "YES";ln;
-    rep(i,0,n){
-        cout << (ans[i] + 1)  << " ";
-    }
-    ln;
-
 }
 
 int main(){
@@ -70,3 +73,4 @@ int main(){
         solve();
     return 0;
 }
+

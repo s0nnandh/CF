@@ -20,43 +20,31 @@ template<class H, class... T> void DBG(H h, T... t) {
 #ifdef _DEBUG
 #define dbg(...) cerr << "LINE(" << __LINE__ << ") -> [" << #__VA_ARGS__ << "]: [", DBG(__VA_ARGS__)
 #else
-#define dbg(...) cerr << "" << endl
+#define dbg(...) cerr << "[ ]" << endl
 #endif
 
 #define pi pair<int,int>
-#define fr first
-#define sc second
 
 
 void solve(){
-    int n,m,x;
-    cin >> n >> m >> x;
-    vector<pi> v(n);
-    rep(i,0,n){
-        cin >> v[i].fr;
-        v[i].sc = i;
+    int n;
+    cin >> n;
+    bool ans = 0;
+    if(n%2 == 0){
+        int v = n/2;
+        int k = sqrt(v);
+        if(k*k == v){
+            ans = 1;
+        }
     }
-    sort(v.begin(),v.end());
-    vector<int> ans(n);
-    set<pi> s;
-    rep(i,0,m){
-        s.insert(v[i]);
-        ans[v[i].sc] = i;
+    if(!ans && n%4 == 0){
+        int v = n/4;
+        int k = sqrt(v);
+        if(k*k == v){
+            ans = 1;
+        }
     }
-    rep(i,m,n){
-        auto cur = *s.begin();
-        s.erase(s.begin());
-        cur.fr += v[i].fr;
-        ans[v[i].sc] = ans[cur.sc];
-        s.insert(cur);
-    }
-
-    cout << "YES";ln;
-    rep(i,0,n){
-        cout << (ans[i] + 1)  << " ";
-    }
-    ln;
-
+    cout << (ans?"YES":"NO");ln;
 }
 
 int main(){
@@ -70,3 +58,4 @@ int main(){
         solve();
     return 0;
 }
+
